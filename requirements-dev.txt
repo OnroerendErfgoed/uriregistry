@@ -13,3 +13,4 @@ pytest
 pytest-cov==1.8.1
 webtest
 httpretty==0.8.9
+coveralls
