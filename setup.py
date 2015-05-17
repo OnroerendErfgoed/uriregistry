@@ -10,7 +10,7 @@ with open(os.path.join(here, 'CHANGES.rst')) as f:
 
 requires = [
     'pyramid',
-    'pyramid_uriregistry',
+    'pyramid_urireferencer',
     'requests'
     ]
 
