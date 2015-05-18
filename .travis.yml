@@ -7,6 +7,6 @@ install:
  - pip install -r requirements-dev.txt #fix versions
  - python setup.py develop
 script:
- - py.test --cov urireferencer --cov-report term-missing tests
+ - py.test --cov uriregistry --cov-report term-missing tests
 after_success:
  - coveralls
