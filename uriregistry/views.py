@@ -3,7 +3,7 @@ import requests
 from pyramid.response import Response
 from pyramid.view import view_config
 
-from .models import get_urilist
+from uriregistry import get_urilist
 from pyramid_urireferencer.models import (
     ApplicationResponse,
     RegistryResponse

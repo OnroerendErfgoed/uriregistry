@@ -14,7 +14,7 @@ requires = [
     'requests'
     ]
 
-setup(name='registry',
+setup(name='uriregistry',
       version='0.1.0.dev0',
       description='A central URI registry to keep track of where what URI is being used.',
       long_description=README + '\n\n' + CHANGES,
@@ -35,6 +35,6 @@ setup(name='registry',
       install_requires=requires,
       entry_points="""\
       [paste.app_factory]
-      main = registry:main
+      main = uriregistry:main
       """,
       )
