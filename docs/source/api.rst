@@ -1,57 +1,42 @@
 =================
 API Documentation
 =================
-========
-registry
-========
+
+uriregistry
+===========
 
 Models module
 -------------
 
-.. automodule:: registry.models
+.. automodule:: uriregistry.models
    :members:
    :private-members:
 
 Views module
 -------------
 
-.. automodule:: registry.views
+.. automodule:: uriregistry.views
    :members:
    :private-members:
 
-================
-referencesplugin
-================
 
-referencesplugin module
--------------
+pyramid_urireferencer
+=====================
 
-.. automodule:: referencesplugin
+.. automodule:: pyramid_urireferencer
    :members:
    :private-members:
 
 Referencer module
--------------
+-----------------
 
-.. automodule:: referencesplugin.referencer
+.. automodule:: pyramid_urireferencer.referencer
    :members:
    :private-members:
 
 Views module
--------------
+------------
 
-.. automodule:: referencesplugin.views
+.. automodule:: pyramid_urireferencer.views
    :members:
    :private-members:
-
-===============
-registrycommons
-===============
-
-Models module
--------------
-
-.. automodule:: registrycommons.models
-   :members:
-   :private-members:
-
