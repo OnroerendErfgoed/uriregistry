@@ -3,7 +3,6 @@ import requests
 from pyramid.response import Response
 from pyramid.view import view_config
 
-from uriregistry import get_urilist
 from pyramid_urireferencer.models import (
     ApplicationResponse,
     RegistryResponse
@@ -25,7 +24,7 @@ class RegistryView(RestView):
     @view_config(route_name='references', renderer='json', accept='application/json')
     def get_references(self):
         uri = self.request.params.get('uri', None)
-        return _handle_uri(uri)
+        return _handle_uri(request.uri_registry, uri)
 
     @view_config(route_name='home', request_method='GET')
     def home(self):
@@ -35,7 +34,7 @@ class RegistryView(RestView):
 service_info = """Registryservice: service voor registratieafhandeling van uri's"""
 
 
-def _handle_uri(uri):
+def _handle_uri(uri_registry, uri):
     """
     This method takes the uri and checks the configuration if the base uri is used in other applications.
     A :class: RegistryResponse is returned with all the information
@@ -46,7 +45,7 @@ def _handle_uri(uri):
     base_uri = _get_base_uri(uri)
     #get applications that use the base_uri
     applications_list = []
-    [applications_list.extend(u.applications) for u in get_urilist() if _eq(u.base_uri, base_uri)]
+    [applications_list.extend(u.applications) for u in uri_registry.uris if _eq(u.base_uri, base_uri)]
     #get distinct application list
     applications_list = list(set(applications_list))
     application_responses = [_get_application_response(app, uri) for app in applications_list]

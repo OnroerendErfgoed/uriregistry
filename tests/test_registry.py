@@ -3,7 +3,10 @@ import unittest
 
 from pyramid import testing
 from pyramid.response import Response
-from uriregistry.models import Application, set_urilist, get_urilist, _load_configuration
+
+from uriregistry import _load_configuration
+from uriregistry.registry import UriRegistry
+from uriregistry.models import Application
 from uriregistry.views import _get_base_uri, _handle_uri, _eq, _stripped, _get_application_response, _get_registry_response, \
     RegistryView
 from pyramid_urireferencer.models import RegistryResponse, ApplicationResponse
@@ -46,18 +49,13 @@ class TestData(unittest.TestCase):
                 'uri': 'http://localhost:2222'
                 }
                 ]
-        set_urilist(uri_dict, application_dict)
-
+        self.uri_registry = UriRegistry(application_dict, uri_dict)
 
     def tearDown(self):
         pass
 
     def test_home(self):
         self.assertIsInstance(RegistryView(testing.DummyRequest()).home(), Response)
-
-    def test_uri_list(self):
-        self.assertIsInstance(get_urilist(), list)
-        self.assertEqual(get_urilist().__len__(), 3)
 
     def test_get_base_uri(self):
         self.assertEqual(_get_base_uri("http://id.erfgoed.net/foobar/2/"), "http://id.erfgoed.net/foobar")
@@ -72,7 +70,7 @@ class TestData(unittest.TestCase):
 
     def test_handle_uri(self):
         uri = "http://id.erfgoed.net/foobar/2/"
-        response =_handle_uri(uri)
+        response =_handle_uri(self.uri_registry, uri)
         self.assertIsInstance(response, RegistryResponse)
         self.assertEqual(response.uri, "http://id.erfgoed.net/foobar/2")
         self.assertEqual(response.base_uri, "http://id.erfgoed.net/foobar")
@@ -149,14 +147,3 @@ class TestData(unittest.TestCase):
         self.assertEqual(r.has_references, False)
         self.assertEqual(r.success, False)
         self.assertEqual(r.count, 0)
-
-    def test_load_configuration_error(self):
-        TEST_DIR=os.path.join(os.path.dirname( __file__ ))
-        print(TEST_DIR)
-        self.assertRaises(ImportError, _load_configuration, os.path.join(os.path.dirname(__file__), 'test_registry_error.cfg'))
-
-
-
-
-
-

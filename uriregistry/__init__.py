@@ -9,6 +9,7 @@ import os
 import json
 
 from .models import Application, Uri
+from .registry import get_uri_registry, _build_uri_registry
 
 
 def _parse_settings(settings):
@@ -35,32 +36,12 @@ def _parse_settings(settings):
 
     return urireg_settings
 
-def set_urilist(uri, application):
-    """
-    This method creates a list of :class: Uri and the :class: Application that references to this base uri
-    :param uri: dictionary of base_uri with the references to applications
-    :param application:  dictionary of the applications
-    :return: a list of :class: Uri
-    """
-    global urilist
-    #load dictionary and translate to Application objects
-    app_list = [Application(app['id'], app['name'], app['uri'], app['url']) for app in application]
-    ##load dictionary and translate to Uri objects
-    urilist = [_create_uri(u, app_list) for u in uri]
-
-def get_urilist():
-    return urilist
-
-def _create_uri(u, app_list):
-    apps=[app for app in app_list if app.id in u['applications']]
-    return Uri(u['id'], u['base_uri'], apps)
-
 def _load_configuration(path):
     log.debug('Loading uriregistry config from %s.' % path)
     f = open(path, 'r')
     content = json.loads(f.read())
     f.close()
-    set_urilist(content["uri"], content["application"])
+    return content
 
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
@@ -70,7 +51,12 @@ def main(global_config, **settings):
 
     urireg_settings = _parse_settings(config.registry.settings)
 
-    _load_configuration(urireg_settings['config'])
+    registryconfig = _load_configuration(urireg_settings['config'])
+
+    _build_uri_registry(config.registry, registryconfig)
+
+    config.add_directive('get_uri_registry', get_uri_registry)
+    config.add_request_method(get_uri_registry, 'uri_registry', reify=True)
 
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.add_route('home', '/')
