@@ -47,7 +47,7 @@ def _handle_uri(uri_registry, uri):
     base_uri = _get_base_uri(uri)
     #get applications that use the base_uri
     applications_list = []
-    [applications_list.extend(u.applications) for u in uri_registry.uris if _eq(u.base_uri, base_uri)]
+    [applications_list.extend(u.applications) for u in uri_registry.uris if u.matches(uri)]
     #get distinct application list
     applications_list = list(set(applications_list))
     application_responses = [query_application(app, uri) for app in applications_list]

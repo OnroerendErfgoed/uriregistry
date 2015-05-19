@@ -14,7 +14,7 @@ class UriRegistry:
         self.uris = [
             Uri(
                 u['id'],
-                u['base_uri'],
+                u['match_uri'],
                 [app for app in self.applications if app.id in u['applications']]
             ) for u in uris
         ]

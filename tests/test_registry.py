@@ -19,17 +19,17 @@ class TestData(unittest.TestCase):
                 [
                 {
                 'id': '1',
-                'base_uri': 'http://id.erfgoed.net/foobar',
+                'match_uri': 'http://id.erfgoed.net/foobar/\d+',
                 'applications': ['1', '2']
                 },
                 {
                 'id': '2',
-                'base_uri': 'http://id.erfgoed.net/bar/',
+                'match_uri': 'http://id.erfgoed.net/bar/\w+',
                 'applications': ['1']
                 },
                 {
                 'id': '3',
-                'base_uri': 'http://id.erfgoed.net/foo/',
+                'match_uri': 'http://id.erfgoed.net/foo/.+',
                 'applications': ['2']
                 }
                 ]
