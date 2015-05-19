@@ -69,6 +69,11 @@ class TestGetAndBuild:
         UR2 = _build_uri_registry(r, registryconfig)
         assert UR == UR2
 
+    def test_build_uri_registry(self, registryconfig):
+        r = MockRegistry()
+        UR = _build_uri_registry(r, registryconfig)
+        assert isinstance(UR, UriRegistry)
+
 
 class TestData(unittest.TestCase):
     def setUp(self):
