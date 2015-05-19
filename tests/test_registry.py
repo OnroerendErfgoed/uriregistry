@@ -6,7 +6,7 @@ from pyramid import testing
 from pyramid.response import Response
 
 from uriregistry import _load_configuration
-from uriregistry.registry import UriRegistry
+from uriregistry.registry import UriRegistry, _build_registry
 from uriregistry.models import Application
 from uriregistry.utils import query_application
 from uriregistry.views import RegistryView, _get_registry_response
@@ -19,16 +19,21 @@ class TestRegistry:
         apps = uriregistry.get_applications('http://nudge.nudge.wink.wink')
         assert len(apps) == 0
 
-    def test_numeric_matches(self, uriregistry):
+    def test_get_applications_numeric_matches(self, uriregistry):
         apps = uriregistry.get_applications('http://id.erfgoed.net/foobar/1')
         assert len(apps) == 2
 
         apps = uriregistry.get_applications('http://id.erfgoed.net/foo/a')
         assert len(apps) == 1
 
-    def test_alphanumeric_matches(self, uriregistry):
+    def test_get_applications_alphanumeric_matches(self, uriregistry):
         apps = uriregistry.get_applications('http://id.erfgoed.net/foobar/a')
         assert len(apps) == 0
+
+class TestGeneral:
+
+    def test_build_uri_registry(self, registryconfig):
+        pass
 
 
 class TestData(unittest.TestCase):
