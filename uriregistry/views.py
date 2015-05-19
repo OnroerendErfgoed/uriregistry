@@ -8,7 +8,7 @@ from pyramid_urireferencer.models import (
     RegistryResponse
 )
 
-from .utils import _stripped, _get_base_uri, _eq, query_application
+from .utils import query_application
 
 import logging
 log = logging.getLogger(__name__)
@@ -43,18 +43,15 @@ def _handle_uri(uri_registry, uri):
     :param uri: uri to be evaluated for references
     :return: :class: RegistryResponse
     """
-    uri = _stripped(uri)
-    base_uri = _get_base_uri(uri)
-    #get applications that use the base_uri
-    applications_list = []
-    [applications_list.extend(u.applications) for u in uri_registry.uris if u.matches(uri)]
+    applications = []
+    [applications.extend(u.applications) for u in uri_registry.uris if u.matches(uri)]
     #get distinct application list
-    applications_list = list(set(applications_list))
-    application_responses = [query_application(app, uri) for app in applications_list]
+    applications = list(set(applications))
+    application_responses = [query_application(app, uri) for app in applications]
 
-    return _get_registry_response(application_responses, uri, base_uri)
+    return _get_registry_response(application_responses, uri)
 
-def _get_registry_response(application_responses, uri, base_uri):
+def _get_registry_response(application_responses, uri):
     """
     :param list application_responses:  All :class:`pyramid_urireferencer.models.ApplicationResponse` instances.
     :param str uri: Uri that was evaluated
@@ -72,4 +69,4 @@ def _get_registry_response(application_responses, uri, base_uri):
             has_references = True
         if r.count is not None:
             count = count + r.count
-    return RegistryResponse(uri, base_uri, success, has_references, count, application_responses)
+    return RegistryResponse(uri, uri, success, has_references, count, application_responses)
