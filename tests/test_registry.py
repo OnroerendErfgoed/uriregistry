@@ -6,7 +6,12 @@ from pyramid import testing
 from pyramid.response import Response
 
 from uriregistry import _load_configuration
-from uriregistry.registry import UriRegistry, _build_registry
+from uriregistry.registry import (
+    IUriRegistry,
+    UriRegistry,
+    _build_uri_registry,
+    get_uri_registry
+)
 from uriregistry.models import Application
 from uriregistry.utils import query_application
 from uriregistry.views import RegistryView, _get_registry_response
@@ -30,10 +35,39 @@ class TestRegistry:
         apps = uriregistry.get_applications('http://id.erfgoed.net/foobar/a')
         assert len(apps) == 0
 
-class TestGeneral:
+class MockRegistry:
 
-    def test_build_uri_registry(self, registryconfig):
-        pass
+    def __init__(self, settings=None):
+
+        if settings is None:
+            self.settings = {}
+        else: # pragma NO COVER
+            self.settings = settings
+
+        self.uri_registry = None
+
+    def queryUtility(self, iface):
+        return self.uri_registry
+
+    def registerUtility(self, uri_registry, iface):
+        self.uri_registry = uri_registry
+
+
+class TestGetAndBuild:
+
+    def test_get_uri_registry(self, registryconfig):
+        r = MockRegistry()
+        UR = UriRegistry(registryconfig['applications'], registryconfig['uris'])
+        r.registerUtility(UR, IUriRegistry)
+        UR2 = get_uri_registry(r)
+        assert UR == UR2
+
+    def test_build_uri_registry_already_exists(self, registryconfig):
+        r = MockRegistry()
+        UR = UriRegistry(registryconfig['applications'], registryconfig['uris'])
+        r.registerUtility(UR, IUriRegistry)
+        UR2 = _build_uri_registry(r, registryconfig)
+        assert UR == UR2
 
 
 class TestData(unittest.TestCase):
