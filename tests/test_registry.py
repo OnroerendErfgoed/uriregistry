@@ -7,8 +7,8 @@ from pyramid.response import Response
 from uriregistry import _load_configuration
 from uriregistry.registry import UriRegistry
 from uriregistry.models import Application
-from uriregistry.views import _get_base_uri, _handle_uri, _eq, _stripped, _get_application_response, _get_registry_response, \
-    RegistryView
+from uriregistry.utils import _get_base_uri, _eq, _stripped, query_application
+from uriregistry.views import RegistryView, _handle_uri, _get_registry_response
 from pyramid_urireferencer.models import RegistryResponse, ApplicationResponse
 
 
@@ -86,7 +86,7 @@ class TestData(unittest.TestCase):
     def test_get_application_response(self):
         uri = "http://id.erfgoed.net/foobar/2/"
         app = Application(1, "app_name", "http://uri/app", "http://url/app")
-        r = _get_application_response(app, uri)
+        r = query_application(app, uri)
         self.assertIsInstance(r, ApplicationResponse)
         self.assertEqual(r.uri, app.uri)
         self.assertEqual(r.url, app.url)
