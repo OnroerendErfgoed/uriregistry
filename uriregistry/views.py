@@ -25,9 +25,9 @@ class RegistryView(RestView):
 
     @view_config(route_name='references', renderer='json', accept='application/json')
     def get_references(self):
-        uri = self.request.params.get('uri', None)
+        uri = self.request.params.get('uri', '')
 
-        applications = uri_registry.get_applications(uri)
+        applications = self.request.uri_registry.get_applications(uri)
         application_responses = [query_application(app, uri) for app in applications]
 
         return _get_registry_response(application_responses, uri)
