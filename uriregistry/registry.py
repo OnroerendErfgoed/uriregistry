@@ -19,6 +19,14 @@ class UriRegistry:
             ) for u in uris
         ]
 
+    def get_applications(self, uri):
+        applications = []
+        for u in self.uris:
+            if u.matches(uri):
+                applications.extend(u.applications)
+        applications = list(set(applications))
+        return applications
+
 def _build_uri_registry(registry, registryconfig):
     uri_registry = registry.queryUtility(IUriRegistry)
     if uri_registry is not None:

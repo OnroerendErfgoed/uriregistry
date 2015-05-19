@@ -26,7 +26,11 @@ class RegistryView(RestView):
     @view_config(route_name='references', renderer='json', accept='application/json')
     def get_references(self):
         uri = self.request.params.get('uri', None)
-        return _handle_uri(request.uri_registry, uri)
+
+        applications = uri_registry.get_applications(uri)
+        application_responses = [query_application(app, uri) for app in applications]
+
+        return _get_registry_response(application_responses, uri)
 
     @view_config(route_name='home', request_method='GET')
     def home(self):
@@ -35,21 +39,6 @@ class RegistryView(RestView):
 
 service_info = """Registryservice: what are my uri's up to?"""
 
-
-def _handle_uri(uri_registry, uri):
-    """
-    This method takes the uri and checks the configuration if the base uri is used in other applications.
-    A :class: RegistryResponse is returned with all the information
-    :param uri: uri to be evaluated for references
-    :return: :class: RegistryResponse
-    """
-    applications = []
-    [applications.extend(u.applications) for u in uri_registry.uris if u.matches(uri)]
-    #get distinct application list
-    applications = list(set(applications))
-    application_responses = [query_application(app, uri) for app in applications]
-
-    return _get_registry_response(application_responses, uri)
 
 def _get_registry_response(application_responses, uri):
     """

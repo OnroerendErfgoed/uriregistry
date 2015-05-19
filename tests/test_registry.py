@@ -1,5 +1,6 @@
 import os
 import unittest
+import pytest
 
 from pyramid import testing
 from pyramid.response import Response
@@ -8,9 +9,26 @@ from uriregistry import _load_configuration
 from uriregistry.registry import UriRegistry
 from uriregistry.models import Application
 from uriregistry.utils import query_application
-from uriregistry.views import RegistryView, _handle_uri, _get_registry_response
+from uriregistry.views import RegistryView, _get_registry_response
 
 from pyramid_urireferencer.models import RegistryResponse, ApplicationResponse
+
+class TestRegistry:
+
+    def test_get_applications_no_match(self, uriregistry):
+        apps = uriregistry.get_applications('http://nudge.nudge.wink.wink')
+        assert len(apps) == 0
+
+    def test_numeric_matches(self, uriregistry):
+        apps = uriregistry.get_applications('http://id.erfgoed.net/foobar/1')
+        assert len(apps) == 2
+
+        apps = uriregistry.get_applications('http://id.erfgoed.net/foo/a')
+        assert len(apps) == 1
+
+    def test_alphanumeric_matches(self, uriregistry):
+        apps = uriregistry.get_applications('http://id.erfgoed.net/foobar/a')
+        assert len(apps) == 0
 
 
 class TestData(unittest.TestCase):
@@ -58,21 +76,6 @@ class TestData(unittest.TestCase):
     def test_home(self):
         self.assertIsInstance(RegistryView(testing.DummyRequest()).home(), Response)
 
-    def test_handle_uri(self):
-        uri = "http://id.erfgoed.net/foobar/2"
-        response =_handle_uri(self.uri_registry, uri)
-        self.assertIsInstance(response, RegistryResponse)
-        self.assertEqual(response.uri, "http://id.erfgoed.net/foobar/2")
-
-    def test_get_application_response(self):
-        uri = "http://id.erfgoed.net/foobar/2/"
-        app = Application(1, "app_name", "http://uri/app", "http://url/app")
-        r = query_application(app, uri)
-        self.assertIsInstance(r, ApplicationResponse)
-        self.assertEqual(r.uri, app.uri)
-        self.assertEqual(r.url, app.url)
-        self.assertEqual(r.name, app.name)
-        self.assertEqual(r.success, False)
 
     def test_get_registry_response(self):
         uri = "http://id.erfgoed.net/foobar/2/"
