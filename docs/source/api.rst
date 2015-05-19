@@ -12,10 +12,24 @@ Models module
    :members:
    :private-members:
 
+Registry module
+---------------
+
+.. automodule:: uriregistry.registry
+   :members:
+   :private-members:
+
 Views module
--------------
+------------
 
 .. automodule:: uriregistry.views
+   :members:
+   :private-members:
+
+Utils module
+------------
+
+.. automodule:: uriregistry.utils
    :members:
    :private-members:
 
