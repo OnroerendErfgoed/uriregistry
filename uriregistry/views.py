@@ -63,4 +63,4 @@ def _get_registry_response(application_responses, uri):
             has_references = True
         if r.count is not None:
             count = count + r.count
-    return RegistryResponse(uri, uri, success, has_references, count, application_responses)
+    return RegistryResponse(uri, success, has_references, count, application_responses)
