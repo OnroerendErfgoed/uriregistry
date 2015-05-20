@@ -13,8 +13,8 @@ class Uri:
         return res is not None
 
 class Application:
-    def __init__(self, id, name, uri, url):
+    def __init__(self, id, title, uri, url):
         self.id = id
         self.uri = uri
         self.url = url
-        self.name = name
+        self.title = title

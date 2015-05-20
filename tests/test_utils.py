@@ -14,5 +14,5 @@ class TestUtils:
         assert isinstance(r, ApplicationResponse)
         assert r.uri == app.uri
         assert r.url == app.url
-        assert r.name == app.name
+        assert r.title == app.title
         assert r.success == False

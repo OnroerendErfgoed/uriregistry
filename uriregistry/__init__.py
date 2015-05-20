@@ -58,6 +58,9 @@ def main(global_config, **settings):
     config.add_directive('get_uri_registry', get_uri_registry)
     config.add_request_method(get_uri_registry, 'uri_registry', reify=True)
 
+    from pyramid_urireferencer.renderers import json_renderer
+    config.add_renderer('json', json_renderer)
+
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.add_route('home', '/')
     config.add_route('references', '/references')
