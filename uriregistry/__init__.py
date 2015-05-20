@@ -7,6 +7,7 @@ from pyramid.config import Configurator
 
 import os
 import json
+import yaml
 
 from .models import Application, Uri
 from .registry import get_uri_registry, _build_uri_registry
@@ -19,7 +20,7 @@ def _parse_settings(settings):
     prefix='uriregistry'
 
     defaults = {
-        'config': os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'sample.cfg'))
+        'config': os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'sample.yaml'))
     }
 
     urireg_settings = defaults.copy()
@@ -39,7 +40,9 @@ def _parse_settings(settings):
 def _load_configuration(path):
     log.debug('Loading uriregistry config from %s.' % path)
     f = open(path, 'r')
-    content = json.loads(f.read())
+    #content = json.loads(f.read())
+    content = yaml.load(f.read())
+    log.debug(content)
     f.close()
     return content
 

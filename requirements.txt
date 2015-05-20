@@ -1,5 +1,7 @@
 requests==2.7.0
 pyramid==1.5.7
 
+PyYAML==3.11
+
 #pyramid_urireferencer
 -e git+https://github.com/OnroerendErfgoed/pyramid_urireferencer.git#egg=pyramid_urireferencer

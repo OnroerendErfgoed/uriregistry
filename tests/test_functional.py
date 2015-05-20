@@ -8,7 +8,7 @@ from webtest import TestApp
 @pytest.fixture()
 def app():
     settings = {
-        'uriregistry.config': os.path.join(os.path.dirname(os.path.realpath(__file__)), 'test.cfg')
+        'uriregistry.config': os.path.join(os.path.dirname(os.path.realpath(__file__)), 'test.yaml')
     }
     from uriregistry import main
     return TestApp(main({}, **settings))
