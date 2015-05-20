@@ -2,6 +2,9 @@ import requests
 
 from pyramid.response import Response
 from pyramid.view import view_config
+from pyramid.httpexceptions import (
+    HTTPBadRequest
+)
 
 from pyramid_urireferencer.models import (
     ApplicationResponse,
@@ -25,7 +28,9 @@ class RegistryView(RestView):
 
     @view_config(route_name='references', renderer='json', accept='application/json')
     def get_references(self):
-        uri = self.request.params.get('uri', '')
+        uri = self.request.params.get('uri', None)
+        if not uri:
+            raise HTTPBadRequest('Please include a URI parameter.')
 
         applications = self.request.uri_registry.get_applications(uri)
         application_responses = [query_application(app, uri) for app in applications]

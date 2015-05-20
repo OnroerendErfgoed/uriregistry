@@ -3,6 +3,7 @@ import pytest
 
 from pyramid import testing
 from pyramid.response import Response
+from pyramid.httpexceptions import HTTPBadRequest
 
 from pyramid_urireferencer.models import RegistryResponse
 
@@ -23,11 +24,8 @@ class TestViews:
         pyramid_request.uri_registry = uriregistry
         from uriregistry.views import RegistryView
         v = RegistryView(pyramid_request)
-        res = v.get_references()
-        assert isinstance(res, RegistryResponse)
-        assert res.count == 0
-        assert not res.has_references
-        assert res.success
+        with pytest.raises(HTTPBadRequest):
+            res = v.get_references()
 
     def test_get_references_uri(self, pyramid_request, uriregistry):
         pyramid_request.uri_registry = uriregistry
