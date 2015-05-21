@@ -51,7 +51,7 @@ def test_get_registry_response():
     r = _get_registry_response([app_response_success_ref,app_response_success_ref2], uri)
     assert isinstance(r, RegistryResponse)
     assert len(r.applications) == 2
-    assert r.uri == uri
+    assert r.query_uri == uri
     assert r.has_references
     assert r.success
     assert r.count == 5
@@ -59,7 +59,7 @@ def test_get_registry_response():
     r = _get_registry_response([app_response_success_ref,app_response_nosuccess], uri)
     assert isinstance(r, RegistryResponse)
     assert len(r.applications) == 2
-    assert r.uri == uri
+    assert r.query_uri == uri
     assert r.has_references
     assert not r.success
     assert r.count == 2
@@ -67,7 +67,7 @@ def test_get_registry_response():
     r = _get_registry_response([app_response_success_noref, app_response_success_noref2], uri)
     assert isinstance(r, RegistryResponse)
     assert len(r.applications) == 2
-    assert r.uri == uri
+    assert r.query_uri == uri
     assert not r.has_references
     assert r.success
     assert r.count == 0
@@ -75,7 +75,7 @@ def test_get_registry_response():
     r = _get_registry_response([app_response_success_noref, app_response_success_noref2], uri)
     assert isinstance(r, RegistryResponse)
     assert len(r.applications) == 2
-    assert r.uri == uri
+    assert r.query_uri == uri
     assert not r.has_references
     assert r.success
     assert r.count == 0
@@ -83,7 +83,7 @@ def test_get_registry_response():
     r = _get_registry_response([app_response_nosuccess, app_response_nosuccess2], uri)
     assert isinstance(r, RegistryResponse)
     assert len(r.applications) == 2
-    assert r.uri == uri
+    assert r.query_uri == uri
     assert not r.has_references
     assert not r.success
     assert r.count == 0
