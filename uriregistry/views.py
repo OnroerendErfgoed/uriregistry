@@ -17,11 +17,11 @@ import logging
 log = logging.getLogger(__name__)
 
 
-class ApplicatieView(object):
+class ApplicationView(object):
     def __init__(self, request):
         self.request = request
 
-class RestView(ApplicatieView):
+class RestView(ApplicationView):
     pass
 
 class RegistryView(RestView):

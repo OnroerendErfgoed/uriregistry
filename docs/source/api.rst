@@ -5,6 +5,10 @@ API Documentation
 uriregistry
 ===========
 
+.. automodule:: uriregistry
+   :members:
+   :private-members:
+
 Models module
 -------------
 

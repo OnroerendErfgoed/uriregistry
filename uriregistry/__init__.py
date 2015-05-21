@@ -38,9 +38,14 @@ def _parse_settings(settings):
     return urireg_settings
 
 def _load_configuration(path):
+    '''
+    Load the configuration for the UriRegistry.
+
+    :param str path: Path to the config file in YAML format.
+    :returns: A :class:`dict` with the config options.
+    '''
     log.debug('Loading uriregistry config from %s.' % path)
     f = open(path, 'r')
-    #content = json.loads(f.read())
     content = yaml.load(f.read())
     log.debug(content)
     f.close()
