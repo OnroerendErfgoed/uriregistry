@@ -13,9 +13,8 @@ question: in which applications is a certain resource (ie. a URI) being used?
 .. toctree::
    :maxdepth: 2
 
-   overzicht
-   opmerkingen
-   architectuur
+   intro
+   architecture
    service
    ontwikkeling
    api

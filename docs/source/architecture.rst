@@ -1,8 +1,6 @@
 ============
-Architectuur
+Architecture
 ============
-
-Dit is een uitwerking van optie 1 (zie opmerkingen)
 
 Een centrale registry zal bijhouden welke applicaties refereren naar een bepaalde resource (via uri). Indien de authentieke
 bron van de resource wil achterhalen of er nog verwijzingen zijn naar de resource, dan de bron deze vraag stellen aan de registry.
@@ -29,17 +27,17 @@ Schema
         START -> RP
     }
 
-    node "RestRegistry" as RR{
+    node "UriRegistry" as UR{
       [Registry] as REG
       [Aggregator] as AGR
     }
 
     package "App 1" as A1{
-        [ReferencesPlugin] as RP1
+        [pyramid_urireferencer] as RP1
     }
 
     package "App 2" as A2{
-        [ReferencesPlugin] as RP2
+        [pyramid_urireferencer] as RP2
     }
 
     RP -> REG
@@ -52,44 +50,16 @@ Schema
     @enduml
 
 
-Plugin
-------
+pyramid_urireferencer
+---------------------
 
-De plugin zal een route configuren op "/references", de implementatie van de view wordt overgelaten aan de desbetreffende applicatie.
-De registry kan dan "/references?uri=http://id.erfgoed.net/foobar/1" gebruiken om aan de applicatie te vragen of er nog een referentie is naar een bepaalde resource
+This pluging will expose a service at `/references`. This service will take a
+single parameter, `uri`. A full request looks like eg.
+`/references?uri=http://id.erfgoed.net/besluiten/1`. Within the application, a
+check will be executed to see if the application keeps references to this
+particular URI.
 
-Er wordt ook voorzien in een "isReferenced(uri)" methode. Deze zal de centrale registry aanroepen en teruggeven of een uri nog referenties heeft.
-
-
-Registry
---------
-
-Centrale registry
-
-.. uml::
-
-    @startuml
-
-    object "application" as APP
-
-    APP: id
-    APP: name
-
-
-    object "reference" as REF
-
-    REF: app_id
-    REF: uri_id
-
-
-    object "uri" as URI
-
-    URI: uri_id
-    URI: base_uri
-
-
-    APP - REF
-    REF - URI
-
-    @enduml
-
+The plugin also provides a method
+:meth:`pyramid_urireferencer.referencer.Referencer.is_referenced` that can be
+used to contact the central registry to see if a certain URI is in use
+somewhere.
