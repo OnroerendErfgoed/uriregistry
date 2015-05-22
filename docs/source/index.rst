@@ -16,7 +16,7 @@ question: in which applications is a certain resource (ie. a URI) being used?
    intro
    architecture
    service
-   ontwikkeling
+   development
    api
    installatie
    changes
