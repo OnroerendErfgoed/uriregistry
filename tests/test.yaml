@@ -1,5 +1,5 @@
 uris:
-    - id: 1,
+    - id: 1
       match_uri: http://id.erfgoed.net/foobar/\d+
       applications:
         - 1
