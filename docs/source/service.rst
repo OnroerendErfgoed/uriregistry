@@ -88,45 +88,29 @@ The central UriRegistry has a single endpoint that can be called.
             ],
         }
 
-    :query uri: The uri of the resources the client wants information on. Required.
+    :query uri: The uri of the resource the client wants information on. Required.
     :statuscode 200: The service has a valid answer
     :statuscode 400: There's something wrong with the request, eg. no URI parameter present.
 
 
-----------------
-ReferencesPlugin
-----------------
+---------------------
+Pyramid_urireferencer
+---------------------
 
-De volgende endpoints zijn gekend:
+Every application that implements :mod:`pyramid_urireferencer` has the samen
+endpoint as the central registry, but with a slightly different response set.
 
-.. http:get:: /references?uri=
+.. http:get:: /references
 
-    Het opvragen van referenties naar een opgegeven uri aan een applicatie die de ReferencesPlugin inplugt
-
-    **Request**:
-
-        * **uri** - unieke verwijzing naar een object (uri). De service gaat op zoek naar referenties in de applicaties die referencesplugin inplugt
-
-    **Response**:
-
-        * **name** - naam van de applicatie (wordt aangeleverd door registry, niet door de applicatie zelf)
-        * **url** - url van de applicatie (wordt aangeleverd door registry, niet door de applicatie zelf)
-        * **uri** - uri van de applicatie (wordt aangeleverd door registry, niet door de applicatie zelf)
-        * **success** - 'true' indien de request naar de applicatie gelukt is, zoniet 'false'
-        * **has_references** - 'true' indien referenties gevonden, 'false' indien geen referenties gevonden, 'null' indien success=false
-        * **count** - geeft het aantal gevonden referenties, '0' indien geen referenties gevonden, 'null' indien success=false
-        * **items** - geeft de objecten die verwijzen naar de uri (max. 5 objecten), 'null' indien success=false
-            * **name** - naam van het object
-            * **uri** - uri van het object dat verwijst naar de request-uri
+    Query the application to see if and possibly where a certain URI is in use. 
 
     **Example request**:
 
     .. sourcecode:: http
 
-        Remote Address:127.0.0.1:5555
-        Request URL:http://localhost:5555/references?uri=http://id.erfgoed.net/foobar/2
-        Request Method:GET
-        Status Code:200 OK
+        GET /references?uri=http://id.erfgoed.net/foobar/2
+        Host: www.erfgoed.net
+        Accept: application/json
 
     **Example response**:
 
@@ -136,34 +120,31 @@ De volgende endpoints zijn gekend:
         Content-Type: application/json
 
         {
-          "count": 8,
-          "name": null,
-          "success": true,
-          "has_references": true,
-          "url": null,
-          "items": [
             {
-              "name": "itemname_1",
-              "uri": "http://demo_uri/1"
-            },
-            {
-              "name": "itemname_2",
-              "uri": "http://demo_uri/2"
-            },
-            {
-              "name": "itemname_3",
-              "uri": "http://demo_uri/3"
-            },
-            {
-              "name": "itemname_4",
-              "uri": "http://demo_uri/4"
+                "count": 8,
+                "title": "app1",
+                "success": true,
+                "has_references": true,
+                "uri": "http://www.erfgoed.net",
+                "url": "http://www.erfgoed.net",
+                "items": [
+                    {
+                       "name": "itemname1",
+                       "uri": "http://www.erfgoed.net/baz/1"
+                    }, {
+                       "name": "itemname2",
+                       "uri": "http://www.erfgoed.net/baz/10"
+                    }, {
+                       "name": "itemname3",
+                       "uri": "http://www.erfgoed.net/baz/14"
+                    }, {
+                       "name": "itemname4",
+                       "uri": "http://www.erfgoed.net/baz/34"
+                    }
+                ],
             }
-          ],
-          "uri": null
         }
 
-    :statuscode 200: De opdracht is geslaagd.
-    :statuscode 403: U heeft geen toegang tot de service.
-    :statuscode 404: De service is niet beschikbaar.
-
-
+    :query uri: The uri of the resource the client wants information on. Required.
+    :statuscode 200: The service has a valid answer
+    :statuscode 400: There's something wrong with the request, eg. no URI parameter present.
