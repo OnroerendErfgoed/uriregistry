@@ -57,14 +57,14 @@ class TestGetAndBuild:
 
     def test_get_uri_registry(self, registryconfig):
         r = MockRegistry()
-        UR = UriRegistry(registryconfig['applications'], registryconfig['uris'])
+        UR = UriRegistry(registryconfig['applications'], registryconfig['uri_templates'])
         r.registerUtility(UR, IUriRegistry)
         UR2 = get_uri_registry(r)
         assert UR == UR2
 
     def test_build_uri_registry_already_exists(self, registryconfig):
         r = MockRegistry()
-        UR = UriRegistry(registryconfig['applications'], registryconfig['uris'])
+        UR = UriRegistry(registryconfig['applications'], registryconfig['uri_templates'])
         r.registerUtility(UR, IUriRegistry)
         UR2 = _build_uri_registry(r, registryconfig)
         assert UR == UR2

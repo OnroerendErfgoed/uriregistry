@@ -9,7 +9,7 @@ import os
 import json
 import yaml
 
-from .models import Application, Uri
+from .models import Application, UriTemplate
 from .registry import get_uri_registry, _build_uri_registry
 
 

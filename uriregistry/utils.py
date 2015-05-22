@@ -17,11 +17,7 @@ def query_application(app, uri):
         url = app.url + '/references?uri=' + uri
         r = requests.get(url)
         a = ApplicationResponse.load_from_json(r.json())
-        #todo app-metadata is added here to the response. Is there a possibility that the applicationresponse already has this metadata?
-        a.title = app.title
-        a.uri = app.uri
-        a.url = app.url
         return a
     except:
         log.error('Could not check if uri %s is known to app %s (uri: %s)' % (uri, app.title, app.uri))
-        return ApplicationResponse(app.title, app.uri, app.url, False, None, None, None)
+        return ApplicationResponse(app.title, app.uri, app.service_url, False, None, None, None)

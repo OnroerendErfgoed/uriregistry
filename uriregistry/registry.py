@@ -2,7 +2,7 @@
 
 from zope.interface import Interface
 
-from .models import Application, Uri
+from .models import Application, UriTemplate
 
 class IUriRegistry(Interface):
     pass
@@ -13,12 +13,11 @@ class UriRegistry:
     '''
 
     def __init__(self, applications = [], uris = []):
-        self.applications = [Application(app['id'], app['name'], app['uri'], app['url']) for app in applications]
+        self.applications = [Application(app['uri'], app['name'], app['service_url']) for app in applications]
         self.uris = [
-            Uri(
-                u['id'],
+            UriTemplate(
                 u['match_uri'],
-                [app for app in self.applications if app.id in u['applications']]
+                [app for app in self.applications if app.uri in u['applications']]
             ) for u in uris
         ]
 
@@ -47,7 +46,7 @@ def _build_uri_registry(registry, registryconfig):
 
     uri_registry = UriRegistry(
         registryconfig['applications'],
-        registryconfig['uris']
+        registryconfig['uri_templates']
     )
 
     registry.registerUtility(uri_registry, IUriRegistry)

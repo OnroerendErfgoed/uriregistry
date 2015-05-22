@@ -5,32 +5,27 @@ from uriregistry.registry import UriRegistry
 @pytest.fixture(scope="session")
 def registryconfig():
     cfg = {
-        'uris': [
+        'uri_templates': [
             {
-                'id': '1',
                 'match_uri': 'http://id.erfgoed.net/foobar/\d+',
-                'applications': ['1', '2']
+                'applications': ['http://localhost:5555', 'http://localhost:2222']
             }, {
-                'id': '2',
                 'match_uri': 'http://id.erfgoed.net/bar/\w+',
-                'applications': ['1']
+                'applications': ['http://localhost:5555']
             }, {
-                'id': '3',
                 'match_uri': 'http://id.erfgoed.net/foo/.+',
-                'applications': ['2']
+                'applications': ['http://localhost:2222']
             }
         ],
         'applications': [
             {
-                'id': '1',
                 'name': 'app1',
-                'url': 'http://localhost:5555',
-                'uri': 'http://localhost:5555'
+                'uri': 'http://localhost:5555',
+                'service_url': 'http://localhost:5555/references'
             }, {
-                'id': '2',
                 'name': 'app2',
-                'url': 'http://localhost:2222',
-                'uri': 'http://localhost:2222'
+                'uri': 'http://localhost:2222',
+                'service_url': 'http://localhost:2222/references'
             }
         ]
     }
@@ -39,4 +34,4 @@ def registryconfig():
 
 @pytest.fixture(scope="session")
 def uriregistry(registryconfig):
-    return UriRegistry(registryconfig['applications'], registryconfig['uris'])
+    return UriRegistry(registryconfig['applications'], registryconfig['uri_templates'])

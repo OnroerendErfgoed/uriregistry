@@ -19,5 +19,5 @@ class TestGeneral:
 
     def test_load_configuration(self):
         cfg = _load_configuration(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'test.yaml'))
-        assert 'uris' in cfg
+        assert 'uri_templates' in cfg
         assert 'applications' in cfg
