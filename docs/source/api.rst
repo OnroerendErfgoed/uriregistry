@@ -45,6 +45,13 @@ pyramid_urireferencer
    :members:
    :private-members:
 
+Models module
+-------------
+
+.. automodule:: pyramid_urireferencer.models
+   :members:
+   :private-members:
+
 Referencer module
 -----------------
 
