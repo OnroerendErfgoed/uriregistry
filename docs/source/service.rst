@@ -120,29 +120,27 @@ endpoint as the central registry, but with a slightly different response set.
         Content-Type: application/json
 
         {
-            {
-                "count": 8,
-                "title": "app1",
-                "success": true,
-                "has_references": true,
-                "uri": "http://www.erfgoed.net",
-                "url": "http://www.erfgoed.net",
-                "items": [
-                    {
-                       "name": "itemname1",
-                       "uri": "http://www.erfgoed.net/baz/1"
-                    }, {
-                       "name": "itemname2",
-                       "uri": "http://www.erfgoed.net/baz/10"
-                    }, {
-                       "name": "itemname3",
-                       "uri": "http://www.erfgoed.net/baz/14"
-                    }, {
-                       "name": "itemname4",
-                       "uri": "http://www.erfgoed.net/baz/34"
-                    }
-                ],
-            }
+            "count": 8,
+            "title": "app1",
+            "success": true,
+            "has_references": true,
+            "uri": "http://www.erfgoed.net",
+            "url": "http://www.erfgoed.net",
+            "items": [
+                {
+                   "name": "itemname1",
+                   "uri": "http://www.erfgoed.net/baz/1"
+                }, {
+                   "name": "itemname2",
+                   "uri": "http://www.erfgoed.net/baz/10"
+                }, {
+                   "name": "itemname3",
+                   "uri": "http://www.erfgoed.net/baz/14"
+                }, {
+                   "name": "itemname4",
+                   "uri": "http://www.erfgoed.net/baz/34"
+                }
+            ]
         }
 
     :query uri: The uri of the resource the client wants information on. Required.
