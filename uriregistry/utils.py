@@ -14,7 +14,7 @@ def query_application(app, uri):
     :rtype pyramid_urireferencer.models.ApplicationResponse:
     """
     try:
-        url = app.url + '/references?uri=' + uri
+        url = '{0}?{1}'.format(app.service_url, urllib.urlencode({'uri': uri}))
         r = requests.get(url)
         a = ApplicationResponse.load_from_json(r.json())
         return a
