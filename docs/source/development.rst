@@ -38,6 +38,47 @@ Run the application with the sample config :file:`sample.yaml`.
 
 Point your browser at http://localhost:6543 to see it in action!
 
+Configuring a UriRegistry
+=========================
+
+Your UriRegistry can be configured with a YAML file. By default, a file
+:file:`sample.yaml` in the `uriregistry` package is used, but you can change
+this withing your own :file:`development.ini`.
+
+.. code-block:: ini
+
+    uriregistry.config = %(here)s/myapp.yaml
+
+In this config file you specify which applications can be called by the registry
+when looking for URI's in use. You can also specify for each URI template in
+what application it might be found.
+
+.. code:: yaml
+
+    uris:
+        - id: 1
+          match_uri: http://id.erfgoed.net/foobar/\d+
+          applications:
+            - 1
+            - 2
+        - id: 2
+          match_uri: http://id.erfgoed.net/bar/\w+
+          applications:
+            - 1
+        - id: 3
+          match_uri: http://id.erfgoed.net/foo/.+
+          applications:
+            - 2
+    applications:
+        - id: 1
+          name: app1
+          url: http://localhost:5555
+          uri: http://localhost:5555
+        - id: 2
+          name: app2
+          url: http://localhost:2222
+          uri: http://localhost:2222
+
 Testing
 =======
 

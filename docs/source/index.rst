@@ -18,7 +18,6 @@ question: in which applications is a certain resource (ie. a URI) being used?
    service
    development
    api
-   installatie
    changes
 
 
