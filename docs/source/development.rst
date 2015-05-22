@@ -84,6 +84,7 @@ implement the :meth:`~pyramid_urireferencer.referencer.Referencer.references`
 method.
 
 .. code-block:: python
+
     from pyramid_urireferencer.referencer import Referencer
     from pyramid_urireferencer.models import ApplicationResponse
 
