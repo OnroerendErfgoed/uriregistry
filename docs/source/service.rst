@@ -23,8 +23,8 @@ The central UriRegistry has a single endpoint that can be called.
     * **applications** - A list of all applications that were queries and the results they returned
 
         * **title** - A title for the application
-        * **url** - url of the application
-        * **uri** - uri of the  applicatie
+        * **service_url** - Url of the application's references service
+        * **uri** - Uri of the  application. Does not need to be a http uri.
         * **success** - Will be `True` if the request for this application succeeded, else `False`.
         * **has_references** - Will be `True` if at least one reference was found. If the request failed, this will be `None`. Not `False`.
         * **count** - Returns the number of references found. If the request failed (success==`False`), this will be `None`.
@@ -60,7 +60,7 @@ The central UriRegistry has a single endpoint that can be called.
                     "success": true,
                     "has_references": true,
                     "uri": "http://www.erfgoed.net",
-                    "url": "http://www.erfgoed.net",
+                    "service_url": "http://www.erfgoed.net/references",
                     "items": [
                         {
                            "name": "itemname1",
@@ -81,7 +81,7 @@ The central UriRegistry has a single endpoint that can be called.
                    "title": "app2",
                    "success": false,
                    "has_references": null,
-                   "url": "http://something.erfgoed.net",
+                   "service_url": "http://something.erfgoed.net/references",
                    "uri": "http://something.erfgoed.net",
                    "items": null
                 }
@@ -125,7 +125,7 @@ endpoint as the central registry, but with a slightly different response set.
             "success": true,
             "has_references": true,
             "uri": "http://www.erfgoed.net",
-            "url": "http://www.erfgoed.net",
+            "service_url": "http://www.erfgoed.net/references",
             "items": [
                 {
                    "name": "itemname1",

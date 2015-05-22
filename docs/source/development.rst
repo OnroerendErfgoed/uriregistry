@@ -55,29 +55,24 @@ what application it might be found.
 
 .. code:: yaml
 
-    uris:
-        - id: 1
-          match_uri: http://id.erfgoed.net/foobar/\d+
-          applications:
-            - 1
-            - 2
-        - id: 2
-          match_uri: http://id.erfgoed.net/bar/\w+
-          applications:
-            - 1
-        - id: 3
-          match_uri: http://id.erfgoed.net/foo/.+
-          applications:
-            - 2
     applications:
-        - id: 1
+        - uri: http://localhost:5555
           name: app1
-          url: http://localhost:5555
-          uri: http://localhost:5555
-        - id: 2
+          service_url: http://localhost:5555/references
+        - uri: http://localhost:2222
           name: app2
-          url: http://localhost:2222
-          uri: http://localhost:2222
+          service_url: http://localhost:2222/references
+    uri_templates:
+        - match_uri: http://id.erfgoed.net/foobar/\d+
+          applications:
+            - http://localhost:5555
+            - http://localhost:2222
+        - match_uri: http://id.erfgoed.net/bar/\w+
+          applications:
+            - http://localhost:5555
+        - match_uri: http://id.erfgoed.net/foo/.+
+          applications:
+            - http://localhost:2222
 
 Testing
 =======
@@ -145,5 +140,13 @@ method.
                 count = None
                 items = None
                 success = False
-            return ApplicationResponse(None, None, None, success, has_references, count, items)
+            return ApplicationResponse(
+                'My application',
+                'http://app.me',
+                'http://app.me/references',
+                success,
+                has_references,
+                count,
+                items
+            )
 

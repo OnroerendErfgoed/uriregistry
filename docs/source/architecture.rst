@@ -2,18 +2,6 @@
 Architecture
 ============
 
-Een centrale registry zal bijhouden welke applicaties refereren naar een bepaalde resource (via uri). Indien de authentieke
-bron van de resource wil achterhalen of er nog verwijzingen zijn naar de resource, dan de bron deze vraag stellen aan de registry.
-De registry kan dan op basis van de registry informatie deze vraag doorsturen naar de benodigde applicaties. De antwoorden van de applicaties worden dan
-geaggregeerd in een antwoord naar de authentieke bron.
-
-Elke applicatie die wil kunnen refereren naar andere data dient dit te registreren in de centrale registry en moet ook een methode implementeren om
-eventuele referenties op te vragen.
-
-Er zal een plugin voorzien worden die een genrieke methode voorziet om de registry aan te spreken.
-Deze plugin zal ook een interface bevatten voor de methode om referenties op te vragen van de desbetreffende applicatie.
-
-
 Schema
 ------
 
