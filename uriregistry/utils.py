@@ -5,11 +5,6 @@ log = logging.getLogger(__name__)
 
 import requests
 
-try:
-    from urllib import urlencode
-except ImportError:
-    from urllib.parse import urlencode
-
 from pyramid_urireferencer.models import ApplicationResponse
 
 def query_application(app, uri):
@@ -21,8 +16,7 @@ def query_application(app, uri):
     :rtype pyramid_urireferencer.models.ApplicationResponse:
     """
     try:
-        url = '{0}?{1}'.format(app.service_url, urlencode({'uri': uri}))
-        r = requests.get(url)
+        r = requests.get(app.service_url, params={'uri': uri})
         a = ApplicationResponse.load_from_json(r.json())
         return a
     except Exception as e:
