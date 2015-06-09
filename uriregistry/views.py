@@ -28,6 +28,9 @@ class RegistryView(RestView):
 
     @view_config(route_name='references', renderer='json', accept='application/json')
     def get_references(self):
+        '''
+        Collect the references for a URI and relay them to the client.
+        '''
         uri = self.request.params.get('uri', None)
         if not uri:
             raise HTTPBadRequest('Please include a URI parameter.')
@@ -39,14 +42,19 @@ class RegistryView(RestView):
 
     @view_config(route_name='home', request_method='GET')
     def home(self):
+        '''
+        The root information page
+        '''
         return Response(service_info, content_type='text/plain', status_int=200)
 
 
-service_info = """Registryservice: what are my uri's up to?"""
+service_info = """UriRegistry: what are my uri's up to?"""
 
 
 def _get_registry_response(application_responses, uri):
     """
+    Generate the final response by aggregating all the application responses.
+
     :param list application_responses:  All :class:`pyramid_urireferencer.models.ApplicationResponse` instances.
     :param str uri: Uri that was evaluated
     :param str base_uri: Base uri of the uri that was evaluated

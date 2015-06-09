@@ -59,6 +59,13 @@ Referencer module
    :members:
    :private-members:
 
+Rendererers module
+------------------
+
+.. automodule:: pyramid_urireferencer.renderers
+   :members:
+   :private-members:
+
 Views module
 ------------
 

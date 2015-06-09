@@ -14,6 +14,11 @@ from .registry import get_uri_registry, _build_uri_registry
 
 
 def _parse_settings(settings):
+    '''
+    Parse the relevant settings for this application.
+
+    :param dict settings:
+    '''
 
     log.debug(settings)
 
@@ -52,8 +57,11 @@ def _load_configuration(path):
     return content
 
 def main(global_config, **settings):
-    """ This function returns a Pyramid WSGI application.
-    """
+    '''
+    This function returns a Pyramid WSGI application.
+
+    :param pyramid.config.Configurator global_config:
+    '''
 
     config = Configurator(settings=settings)
 
