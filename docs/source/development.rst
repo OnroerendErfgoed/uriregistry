@@ -95,6 +95,7 @@ Adding pyramid_urireferencer to an application
 
 When you want to add an application to the network of applications, you need to
 include the :mod:`pyramid_urireferencer` library. Add it to your
+
 :file:`requirements.txt` and :file:`setup.py` requirements.
 
 Add the library to your application by including the following in your main:
@@ -115,9 +116,13 @@ and add two configuration options.
     urireferencer.registry_url = http://localhost:6543
 
 Of course, you also need to write this referencer. To do this, create an object
-that extends the :class:`pyramid_urireferencer.referencer.Referencer` and
-implement the :meth:`~pyramid_urireferencer.referencer.Referencer.references`
-method.
+that implements the abstract
+:class:`pyramid_urireferencer.referencer.AbstractReferencer`. Depending on your
+needs it might be easier to extend the
+:class:`pyramid_urireferencer.referencer.Referencer` since this class already
+has a :meth:`~pyramid_urireferencer.referencer.AbstractReferencer.is_referenced`
+method and only requires you to implement the
+:meth:`~pyramid_urireferencer.referencer.AbstractReferencer.references` method.
 
 .. code-block:: python
 
@@ -149,4 +154,3 @@ method.
                 count,
                 items
             )
-
