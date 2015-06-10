@@ -95,7 +95,6 @@ Adding pyramid_urireferencer to an application
 
 When you want to add an application to the network of applications, you need to
 include the :mod:`pyramid_urireferencer` library. Add it to your
-
 :file:`requirements.txt` and :file:`setup.py` requirements.
 
 Add the library to your application by including the following in your main:
