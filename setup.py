@@ -11,7 +11,8 @@ with open(os.path.join(here, 'CHANGES.rst')) as f:
 requires = [
     'pyramid',
     'pyramid_urireferencer',
-    'requests'
+    'requests',
+    'PyYAML'
     ]
 
 setup(name='uriregistry',
@@ -28,9 +29,10 @@ setup(name='uriregistry',
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
         ],
-      author='',
-      author_email='',
-      url='',
+      author='Flanders Heritage Agency',
+      author_email='ict@onroerenderfgoed.be',
+      url='http://atramhasis.readthedocs.org',
+      license='GPLv3',
       keywords='web wsgi bfg pylons pyramid',
       packages=find_packages(),
       include_package_data=True,
