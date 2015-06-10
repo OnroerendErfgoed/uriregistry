@@ -16,10 +16,14 @@ requires = [
 
 setup(name='uriregistry',
       version='0.1.0.dev0',
-      description='A central URI registry to keep track of where what URI is being used.',
+      description='A central URI registry that tracks where a certain URI is being used.',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Programming Language :: Python",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.3",
+        "Programming Language :: Python :: 3.4"
         "Framework :: Pyramid",
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
@@ -31,7 +35,7 @@ setup(name='uriregistry',
       packages=find_packages(),
       include_package_data=True,
       zip_safe=False,
-      test_suite='registry',
+      test_suite='uriregistry',
       install_requires=requires,
       entry_points="""\
       [paste.app_factory]
