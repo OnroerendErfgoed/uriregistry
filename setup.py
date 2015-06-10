@@ -15,7 +15,7 @@ requires = [
     ]
 
 setup(name='uriregistry',
-      version='0.1.0.dev0',
+      version='0.1.0',
       description='A central URI registry that tracks where a certain URI is being used.',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
