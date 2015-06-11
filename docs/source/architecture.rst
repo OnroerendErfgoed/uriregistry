@@ -9,33 +9,41 @@ Schema
 
     @startuml
 
-    package "Authentieke bron" as AB{
+    package "Client" as AB{
         interface " " as START
-        [ReferencesPlugin] as RP
+        [pyramid_urireferencer] as RP
         START -> RP
     }
 
     node "UriRegistry" as UR{
       [Registry] as REG
-      [Aggregator] as AGR
     }
 
-    package "App 1" as A1{
+    package "Application 1" as A1{
         [pyramid_urireferencer] as RP1
     }
 
-    package "App 2" as A2{
+    package "Application 2" as A2{
         [pyramid_urireferencer] as RP2
     }
 
     RP -> REG
     REG -> RP1
     REG -> RP2
-    RP1 -> AGR
-    RP2 -> AGR
-    AGR -> RP
+    RP1 -> REG
+    RP2 -> REG
+    REG -> RP
 
     @enduml
+
+A client queries the registry with a certain URI, eg.
+`http://id.erfgoed.net/foo/bar`. The registry checks if it knows any
+applications that might be using this URI. It discovers that two applications
+could possibly be using it. Both applications are queried. In each application a
+:class:`pyramid_urireferencer.referencer.AbstractReferencer` has been configured
+that can check if an incomming URI is in use in the application. The results are
+sent back to the registry. The registry tallies the results and aggregates them.
+A final response is sent back to the client.
 
 
 pyramid_urireferencer
