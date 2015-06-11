@@ -50,7 +50,7 @@ The central UriRegistry has a single endpoint that can be called.
 
         {
             "query_uri": "http://id.erfgoed.net/foobar/2",
-            "success": false,
+            "success": true,
             "has_references": true,
             "count": 8,
             "applications": [
