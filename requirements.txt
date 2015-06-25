@@ -3,4 +3,4 @@ pyramid==1.5.7
 
 PyYAML==3.11
 
-pyramid_urireferencer==0.2.0
+pyramid_urireferencer==0.3.0

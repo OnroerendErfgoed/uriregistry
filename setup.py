@@ -16,7 +16,7 @@ requires = [
     ]
 
 setup(name='uriregistry',
-      version='0.1.0',
+      version='0.1.1',
       description='A central URI registry that tracks where a certain URI is being used.',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
@@ -31,7 +31,7 @@ setup(name='uriregistry',
         ],
       author='Flanders Heritage Agency',
       author_email='ict@onroerenderfgoed.be',
-      url='http://atramhasis.readthedocs.org',
+      url='http://uriregistry.readthedocs.org',
       license='GPLv3',
       keywords='web wsgi bfg pylons pyramid',
       packages=find_packages(),
