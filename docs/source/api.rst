@@ -52,6 +52,13 @@ Models module
    :members:
    :private-members:
 
+Protected resources module
+--------------------------
+
+.. automodule:: pyramid_urireferencer.protected_resources
+   :members:
+   :private-members:
+
 Referencer module
 -----------------
 
