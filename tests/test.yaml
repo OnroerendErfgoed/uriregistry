@@ -16,3 +16,6 @@ uri_templates:
     - match_uri: http://id.erfgoed.net/foo/.+
       applications:
         - http://localhost:2222
+    - match_uri: http://id.erfgoed.net/ba(l|k)/\d+
+      applications:
+        - http://localhost:5555

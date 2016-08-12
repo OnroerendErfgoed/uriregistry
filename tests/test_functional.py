@@ -27,3 +27,14 @@ class TestFunctional:
         res = app.get('/references?uri=http://id.erfgoed.net/foo/1')
         assert res.status == '200 OK'
         assert 'application/json' in res.headers['Content-Type']
+
+    def test_get_features_with_or_regex(self, app):
+        res = app.get('/references?uri=http://id.erfgoed.net/bal/789')
+        assert res.status == '200 OK'
+        data_bal = res.json
+        assert len(data_bal['applications']) == 1
+        res = app.get('/references?uri=http://id.erfgoed.net/bak/232')
+        assert res.status == '200 OK'
+        data_bak = res.json
+        assert len(data_bak['applications']) == 1
+        assert data_bal['applications'] == data_bak['applications']
