@@ -3,4 +3,5 @@ pyramid==1.6.1
 
 PyYAML==3.11
 
-pyramid_urireferencer==0.4.0
+#pyramid_urireferencer==0.6.0
+-e git+https://github.com/OnroerendErfgoed/pyramid_urireferencer.git@8_get_uri#egg=pyramid_urireferencer

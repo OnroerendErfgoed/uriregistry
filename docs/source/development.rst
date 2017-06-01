@@ -118,9 +118,10 @@ Of course, you also need to write this referencer. To do this, create an object
 that implements the abstract
 :class:`pyramid_urireferencer.referencer.AbstractReferencer`. Depending on your
 needs it might be easier to extend the
-:class:`pyramid_urireferencer.referencer.Referencer` since this class already
+:class:`pyramid_urireferencer.referencer.Referencer`. This class already
 has a :meth:`~pyramid_urireferencer.referencer.AbstractReferencer.is_referenced`
-method and only requires you to implement the
+method. But the method requires a function :meth:`get_uri` to determine the uri of the current request.
+The :meth:`get_uri` still needs to be implemented. The referencer also requires you to implement the
 :meth:`~pyramid_urireferencer.referencer.AbstractReferencer.references` method.
 
 .. code-block:: python
@@ -129,6 +130,14 @@ method and only requires you to implement the
     from pyramid_urireferencer.models import ApplicationResponse
 
     class DemoReferencer(Referencer):
+
+        def get_uri(self, request):
+            id = request.matchdict['id']
+            if request.data_manager.get(aid).type == 'cirkel':
+                return request.registry.settings['cirkel.uri'].format(id)
+            else:
+                return request.registry.settings['square.uri'].format(id)
+
 
         def references(self, uri):
             try:
