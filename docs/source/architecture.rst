@@ -58,4 +58,5 @@ particular URI.
 The plugin also provides a method
 :meth:`pyramid_urireferencer.referencer.Referencer.is_referenced` that can be
 used to contact the central registry to see if a certain URI is in use
-somewhere. This method
+somewhere. This method requires a function :meth:`pyramid_urireferencer.referencer.Referencer.get_uri`
+to determine the uri of the current request.
