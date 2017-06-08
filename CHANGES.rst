@@ -1,5 +1,5 @@
-next (??-??-2016)
------------------
+0.1.2 (08-06-2017)
+------------------
 
 - Make compatible with Python 3.5
 - Update pyramid_urireferencer to 0.6.0
