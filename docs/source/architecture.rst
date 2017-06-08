@@ -49,7 +49,7 @@ A final response is sent back to the client.
 pyramid_urireferencer
 ---------------------
 
-This pluging will expose a service at `/references`. This service will take a
+This pluging will expose a service at `/references`. This service endpoint will take a
 single parameter, `uri`. A full request looks like eg.
 `/references?uri=http://id.erfgoed.net/besluiten/1`. Within the application, a
 check will be executed to see if the application keeps references to this
@@ -58,4 +58,5 @@ particular URI.
 The plugin also provides a method
 :meth:`pyramid_urireferencer.referencer.Referencer.is_referenced` that can be
 used to contact the central registry to see if a certain URI is in use
-somewhere.
+somewhere. This method requires a function :meth:`pyramid_urireferencer.referencer.Referencer.get_uri`
+to determine the uri of the current request.
