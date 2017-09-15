@@ -12,7 +12,7 @@ pyramid_debugtoolbar==4.3
 #testing
 pytest==3.2.2
 pytest-cov==2.5.1
-webtest==2.0.20
+webtest==2.0.28
 httpretty==0.8.14
 coveralls==1.1
 
