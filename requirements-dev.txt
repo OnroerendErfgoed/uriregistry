@@ -3,7 +3,7 @@
 
 # Documentation
 Sphinx==1.6.3
-sphinxcontrib-httpdomain==1.4.0
+sphinxcontrib-httpdomain==1.5.0
 sphinxcontrib-plantuml==0.7
 
 waitress
