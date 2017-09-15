@@ -2,7 +2,7 @@
 --requirement requirements.txt
 
 # Documentation
-Sphinx==1.4
+Sphinx==1.6.3
 sphinxcontrib-httpdomain==1.4.0
 sphinxcontrib-plantuml==0.7
 
