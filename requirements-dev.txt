@@ -10,7 +10,7 @@ waitress==1.1.0
 pyramid_debugtoolbar==4.3
 
 #testing
-pytest==3.2.5
+pytest==3.3.0
 pytest-cov==2.5.1
 webtest==2.0.29
 httpretty==0.8.14
