@@ -7,7 +7,7 @@ sphinxcontrib-httpdomain==1.6.0
 sphinxcontrib-plantuml==0.10
 
 waitress==1.1.0
-pyramid_debugtoolbar==4.3
+pyramid_debugtoolbar==4.4
 
 #testing
 pytest==3.4.0
