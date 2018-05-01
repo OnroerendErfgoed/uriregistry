@@ -13,7 +13,7 @@ pyramid_debugtoolbar==4.4
 pytest==3.5.1
 pytest-cov==2.5.1
 webtest==2.0.29
-httpretty==0.8.14
+httpretty==0.9.4
 coveralls==1.2.0
 
 # Wheel
