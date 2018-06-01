@@ -17,4 +17,4 @@ httpretty==0.9.4
 coveralls==1.3.0
 
 # Wheel
-wheel==0.30.0
+wheel==0.31.1
