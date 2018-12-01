@@ -1,5 +1,5 @@
 requests==2.20.1
-pyramid==1.9.2
+pyramid==1.10.1
 
 PyYAML==3.13
 
