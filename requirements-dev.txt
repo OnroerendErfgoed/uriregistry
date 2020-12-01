@@ -6,7 +6,7 @@ Sphinx==3.3.1
 sphinxcontrib-httpdomain==1.7.0
 sphinxcontrib-plantuml==0.12
 
-waitress==1.1.0
+waitress==1.4.4
 pyramid_debugtoolbar==4.4
 
 #testing
