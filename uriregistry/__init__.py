@@ -1,14 +1,13 @@
+import os
+import yaml
 import logging
-
-log = logging.getLogger(__name__)
 
 from pyramid.config import Configurator
 
-import os
-import yaml
-
 from .models import Application, UriTemplate
 from .registry import get_uri_registry, _build_uri_registry
+
+log = logging.getLogger(__name__)
 
 
 def _parse_settings(settings):
