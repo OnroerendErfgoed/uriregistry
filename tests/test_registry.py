@@ -1,22 +1,8 @@
-import os
-import unittest
-import pytest
+from uriregistry.registry import IUriRegistry
+from uriregistry.registry import UriRegistry
+from uriregistry.registry import _build_uri_registry
+from uriregistry.registry import get_uri_registry
 
-from pyramid import testing
-from pyramid.response import Response
-
-from uriregistry import _load_configuration
-from uriregistry.registry import (
-    IUriRegistry,
-    UriRegistry,
-    _build_uri_registry,
-    get_uri_registry
-)
-from uriregistry.models import Application
-from uriregistry.utils import query_application
-from uriregistry.views import RegistryView, _get_registry_response
-
-from pyramid_urireferencer.models import RegistryResponse, ApplicationResponse
 
 class TestRegistry:
 
@@ -35,13 +21,14 @@ class TestRegistry:
         apps = uriregistry.get_applications('http://id.erfgoed.net/foobar/a')
         assert len(apps) == 0
 
+
 class MockRegistry:
 
     def __init__(self, settings=None):
 
         if settings is None:
             self.settings = {}
-        else: # pragma NO COVER
+        else:  # pragma NO COVER
             self.settings = settings
 
         self.uri_registry = None

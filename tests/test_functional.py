@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
 import os
 
 import pytest
 
 from webtest import TestApp
+
 
 @pytest.fixture()
 def app():
@@ -12,6 +12,7 @@ def app():
     }
     from uriregistry import main
     return TestApp(main({}, **settings))
+
 
 class TestFunctional:
 

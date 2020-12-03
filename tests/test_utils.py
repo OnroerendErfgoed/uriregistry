@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
-
 from uriregistry.models import Application
 from pyramid_urireferencer.models import ApplicationResponse
 
 from uriregistry.utils import query_application
+
 
 class TestUtils:
 

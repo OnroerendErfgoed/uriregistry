@@ -1,11 +1,10 @@
-import pytest
-
 import os
 
 from uriregistry import (
     _parse_settings,
     _load_configuration
 )
+
 
 class TestGeneral:
 

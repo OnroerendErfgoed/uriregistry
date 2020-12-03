@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
-
 import logging
-log = logging.getLogger(__name__)
-
 import requests
 
 from pyramid_urireferencer.models import ApplicationResponse
+
+log = logging.getLogger(__name__)
+
 
 def query_application(app, uri):
     """
@@ -20,5 +19,5 @@ def query_application(app, uri):
         a = ApplicationResponse.load_from_json(r.json())
         return a
     except Exception as e:
-        log.error('Could not check if uri %s is known to app %s (uri: %s)' % (uri, app.title, app.uri))
+        log.error(f'Could not check if uri {uri} is known to app {app.title} (uri: {app.uri})')
         return ApplicationResponse(app.title, app.uri, app.service_url, False, None, None, None)
