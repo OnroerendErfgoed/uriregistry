@@ -1,36 +1,31 @@
-import requests
+import logging
 
+from pyramid.httpexceptions import HTTPBadRequest
 from pyramid.response import Response
 from pyramid.view import view_config
-from pyramid.httpexceptions import (
-    HTTPBadRequest
-)
-
-from pyramid_urireferencer.models import (
-    ApplicationResponse,
-    RegistryResponse
-)
+from pyramid_urireferencer.models import RegistryResponse
 
 from .utils import query_application
 
-import logging
 log = logging.getLogger(__name__)
 
 
-class ApplicationView(object):
+class ApplicationView:
     def __init__(self, request):
         self.request = request
 
+
 class RestView(ApplicationView):
     pass
+
 
 class RegistryView(RestView):
 
     @view_config(route_name='references', renderer='json', accept='application/json')
     def get_references(self):
-        '''
+        """
         Collect the references for a URI and relay them to the client.
-        '''
+        """
         uri = self.request.params.get('uri', None)
         if not uri:
             raise HTTPBadRequest('Please include a URI parameter.')
@@ -42,9 +37,9 @@ class RegistryView(RestView):
 
     @view_config(route_name='home', request_method='GET')
     def home(self):
-        '''
+        """
         The root information page
-        '''
+        """
         return Response(service_info, content_type='text/plain', status_int=200)
 
 
