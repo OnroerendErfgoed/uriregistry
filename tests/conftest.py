@@ -7,13 +7,13 @@ def registryconfig():
     cfg = {
         'uri_templates': [
             {
-                'match_uri': 'http://id.erfgoed.net/foobar/\d+',
+                'match_uri': r'http://id.erfgoed.net/foobar/\d+',
                 'applications': ['http://localhost:5555', 'http://localhost:2222']
             }, {
-                'match_uri': 'http://id.erfgoed.net/bar/\w+',
+                'match_uri': r'http://id.erfgoed.net/bar/\w+',
                 'applications': ['http://localhost:5555']
             }, {
-                'match_uri': 'http://id.erfgoed.net/foo/.+',
+                'match_uri': r'http://id.erfgoed.net/foo/.+',
                 'applications': ['http://localhost:2222']
             }
         ],

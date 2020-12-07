@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import pytest
 
 from pyramid import testing
@@ -11,6 +10,7 @@ from pyramid_urireferencer.models import RegistryResponse, ApplicationResponse
 @pytest.fixture
 def pyramid_request():
     return testing.DummyRequest()
+
 
 class TestViews:
 
@@ -38,17 +38,23 @@ class TestViews:
         assert not res.has_references
         assert not res.success
 
+
 def test_get_registry_response():
     from uriregistry.views import _get_registry_response
     uri = "http://id.erfgoed.net/foobar/2/"
     app_response_success_ref = ApplicationResponse("app2_name", "http://uri/app2", "http://url/app2", True, True, 2, [])
-    app_response_success_ref2 = ApplicationResponse("app2_name", "http://uri/app2", "http://url/app2", True, True, 3, [])
-    app_response_nosuccess = ApplicationResponse("app2_name", "http://uri/app2", "http://url/app2", False, None, None, None)
-    app_response_nosuccess2 = ApplicationResponse("app2_name", "http://uri/app2", "http://url/app2", False, None, None, None)
-    app_response_success_noref = ApplicationResponse("app2_name", "http://uri/app2", "http://url/app2", True, False, None, None)
-    app_response_success_noref2 = ApplicationResponse("app2_name", "http://uri/app2", "http://url/app2", True, False, None, None)
+    app_response_success_ref2 = ApplicationResponse("app2_name", "http://uri/app2", "http://url/app2", True, True, 3,
+                                                    [])
+    app_response_nosuccess = ApplicationResponse("app2_name", "http://uri/app2", "http://url/app2", False, None, None,
+                                                 None)
+    app_response_nosuccess2 = ApplicationResponse("app2_name", "http://uri/app2", "http://url/app2", False, None, None,
+                                                  None)
+    app_response_success_noref = ApplicationResponse("app2_name", "http://uri/app2", "http://url/app2", True, False,
+                                                     None, None)
+    app_response_success_noref2 = ApplicationResponse("app2_name", "http://uri/app2", "http://url/app2", True, False,
+                                                      None, None)
 
-    r = _get_registry_response([app_response_success_ref,app_response_success_ref2], uri)
+    r = _get_registry_response([app_response_success_ref, app_response_success_ref2], uri)
     assert isinstance(r, RegistryResponse)
     assert len(r.applications) == 2
     assert r.query_uri == uri
@@ -56,7 +62,7 @@ def test_get_registry_response():
     assert r.success
     assert r.count == 5
 
-    r = _get_registry_response([app_response_success_ref,app_response_nosuccess], uri)
+    r = _get_registry_response([app_response_success_ref, app_response_nosuccess], uri)
     assert isinstance(r, RegistryResponse)
     assert len(r.applications) == 2
     assert r.query_uri == uri

@@ -16,16 +16,13 @@ requires = [
     ]
 
 setup(name='uriregistry',
-      version='0.1.2',
+      version='0.2.0',
       description='A central URI registry that tracks where a certain URI is being used.',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2.7",
-        "Programming Language :: Python :: 3.3",
-        "Programming Language :: Python :: 3.4",
-        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.8",
         "Framework :: Pyramid",
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
