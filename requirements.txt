@@ -1,6 +1,6 @@
 requests==2.26.0
 pyramid==2.0
 
-PyYAML==5.3.1
+PyYAML==5.4.1
 
 pyramid_urireferencer==0.7.0
