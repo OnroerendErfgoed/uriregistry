@@ -1,4 +1,4 @@
-requests==2.25.0
+requests==2.26.0
 pyramid==1.10.5
 
 PyYAML==5.3.1
