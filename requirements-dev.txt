@@ -2,19 +2,19 @@
 --requirement requirements.txt
 
 # Documentation
-Sphinx==3.1.1
-sphinxcontrib-httpdomain==1.7.0
-sphinxcontrib-plantuml==0.18
+Sphinx==4.3.2
+sphinxcontrib-httpdomain==1.8.0
+sphinxcontrib-plantuml==0.22
 
-waitress==1.4.4
-pyramid_debugtoolbar==4.6.1
+waitress==2.0.0
+pyramid_debugtoolbar==4.9
 
 #testing
-pytest==5.4.3
-pytest-cov==2.10.0
-webtest==2.0.35
-httpretty==1.0.3
-coveralls==2.0.0
+pytest==6.2.5
+pytest-cov==3.0.0
+webtest==3.0.0
+httpretty==1.1.4
+coveralls==3.3.1
 
 # Wheel
-wheel==0.31.1
+wheel==0.37.1
