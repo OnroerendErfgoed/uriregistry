@@ -32,6 +32,8 @@ class RegistryView(RestView):
             raise HTTPBadRequest('Please include a URI parameter.')
 
         applications = self.request.uri_registry.get_applications(uri)
+        if not applications:
+            return _get_registry_response([], uri)
         with ThreadPoolExecutor(max_workers=len(applications)) as tpe:
             futures = [tpe.submit(query_application, app, uri) for app in applications]
             application_responses = [future.result(timeout=25) for future in futures]
