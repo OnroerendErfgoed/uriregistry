@@ -1,3 +1,8 @@
+0.3.1 (16-08-2022)
+------------------
+
+- Avoid "max_workers must be greater than 0-Exception in case no applications are listed in the configurarion (#97)
+
 0.3.0 (21-02-2022)
 ------------------
 
