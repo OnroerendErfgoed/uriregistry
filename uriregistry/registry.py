@@ -13,13 +13,17 @@ class UriRegistry:
     Central registry that tracks uris and the applications they are being used in.
     """
 
-    def __init__(self, applications=[], uris=[]):
-        self.applications = [Application(app['uri'], app['name'], app['service_url']) for app in applications]
+    def __init__(self, applications=[], uris=[]):  # NoQa
+        self.applications = [
+            Application(app["uri"], app["name"], app["service_url"])
+            for app in applications
+        ]
         self.uris = [
             UriTemplate(
-                u['match_uri'],
-                [app for app in self.applications if app.uri in u['applications']]
-            ) for u in uris
+                u["match_uri"],
+                [app for app in self.applications if app.uri in u["applications"]],
+            )
+            for u in uris
         ]
 
     def get_applications(self, uri):
@@ -47,8 +51,7 @@ def _build_uri_registry(registry, registryconfig):
         return uri_registry
 
     uri_registry = UriRegistry(
-        registryconfig['applications'],
-        registryconfig['uri_templates']
+        registryconfig["applications"], registryconfig["uri_templates"]
     )
 
     registry.registerUtility(uri_registry, IUriRegistry)
@@ -63,7 +66,7 @@ def get_uri_registry(registry):
     :rtype: :class:`uriregistry.registry.UriRegistry`
     """
     # Argument might be a config or request
-    regis = getattr(registry, 'registry', None)
+    regis = getattr(registry, "registry", None)
     if regis is None:
         regis = registry
     return regis.queryUtility(IUriRegistry)
