@@ -1,21 +1,21 @@
 applications:
-    - uri: http://localhost:5555
-      name: app1
-      service_url: http://localhost:5555/references
-    - uri: http://localhost:2222
-      name: app2
-      service_url: http://localhost:2222/references
+  - uri: http://localhost:5555
+    name: app1
+    service_url: http://localhost:5555/references
+  - uri: http://localhost:2222
+    name: app2
+    service_url: http://localhost:2222/references
 uri_templates:
-    - match_uri: http://id.erfgoed.net/foobar/\d+
-      applications:
-        - http://localhost:5555
-        - http://localhost:2222
-    - match_uri: http://id.erfgoed.net/bar/\w+
-      applications:
-        - http://localhost:5555
-    - match_uri: http://id.erfgoed.net/foo/.+
-      applications:
-        - http://localhost:2222
-    - match_uri: http://id.erfgoed.net/ba(l|k)/\d+
-      applications:
-        - http://localhost:5555
+  - match_uri: http://id.erfgoed.net/foobar/\d+
+    applications:
+      - http://localhost:5555
+      - http://localhost:2222
+  - match_uri: http://id.erfgoed.net/bar/\w+
+    applications:
+      - http://localhost:5555
+  - match_uri: http://id.erfgoed.net/foo/.+
+    applications:
+      - http://localhost:2222
+  - match_uri: http://id.erfgoed.net/ba(l|k)/\d+
+    applications:
+      - http://localhost:5555

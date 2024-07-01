@@ -1,0 +1,8 @@
+[flake8]
+application_import_names = uriregistry, tests
+exclude = .venv,
+          .tox,
+          __pycache__,
+import-order-style = pycharm
+max-line-length = 90
+ignore = E402, E405, W503, F403, F405
