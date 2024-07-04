@@ -1,0 +1,42 @@
+name: Uriregistry backend tests
+
+on:
+  workflow_dispatch:
+
+  pull_request:
+    paths:
+      - uriregistry/**
+      - .github/workflows/uriregistry.yaml
+      - scripts/**
+      - pyproject.toml
+      - requirements*.txt
+      - tests/**
+
+  push:
+    branches:
+      - main
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Install python requirements
+        env:
+          HATCH_BUILD_NO_HOOKS: true
+        working-directory: ./
+        run: |
+          pip --version
+          pip install pip-tools
+          pip-sync requirements-dev.txt
+          pip install -e .
+
+      - name: Python tests
+        run: pytest tests --exitfirst --capture=no -vvv --full-trace

@@ -1,0 +1,71 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+version = "0.4.0"
+name = "uriregistry"
+dynamic = ["readme"]
+authors = [
+    { name = "Flanders Heritage Agency", email = "ict@onroerenderfgoed.be" },
+]
+description = "A central URI registry that tracks where a certain URI is being used."
+requires-python = ">=3.10,<3.13"
+keywords = ["web", "wsgi", "pyramid", "SKOS", "thesaurus", "vocabulary"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Programming Language :: Python",
+    "Framework :: Pyramid",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "pyramid==2.0.2",
+    "pyramid_urireferencer==0.8.0",
+    "pyyaml==6.0.1",
+    "requests==2.32.3"
+]
+
+[project.urls]
+History = "https://github.com/OnroerendErfgoed/uriregistry/blob/master/CHANGES.rst"
+Tracker = "https://github.com/OnroerendErfgoed/uriregistry/issues"
+Source = "https://github.com/OnroerendErfgoed/uriregistry"
+Documentation = "https://uriregistry.readthedocs.io/en/latest/"
+
+[project.optional-dependencies]
+dev = [
+    "black==24.4.2",
+    "coveralls==4.0.1",
+    "flake8-import-order==0.18.2",
+    "flake8==7.1.0",
+    "httpretty==1.1.4",
+    "pre-commit==3.7.1",
+    "pyramid_debugtoolbar==4.12.1",
+    "pytest-cov==5.0.0",
+    "pytest==8.2.2",
+    "sphinx==7.3.7",
+    "sphinxcontrib-httpdomain==1.8.1",
+    "sphinxcontrib-plantuml==0.30",
+    "waitress==3.0.0",
+    "webtest==3.0.0"
+]
+
+[project.entry-points."paste.app_factory"]
+main = "uriregistry:main"
+
+##
+# Build tool specific
+##
+[tool.hatch.build.targets.wheel]
+# In the wheel we want to have uriregistry in the root as python module.
+only-include = [
+    "/uriregistry",
+]
+
+[tool.hatch.metadata]
+# This allows us to use github links as dependencies
+allow-direct-references = true
+
