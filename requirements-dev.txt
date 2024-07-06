@@ -5,7 +5,7 @@ babel==2.15.0
 beautifulsoup4==4.12.3
     # via webtest
 black==24.4.2
-certifi==2024.6.2
+certifi==2024.7.4
     # via requests
 cfgv==3.4.0
     # via pre-commit
