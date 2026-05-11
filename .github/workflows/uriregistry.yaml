@@ -39,4 +39,12 @@ jobs:
           pip install -e .
 
       - name: Python tests
-        run: pytest tests --exitfirst --capture=no -vvv --full-trace
+        run: pytest tests --cov=uriregistry --cov-report=xml --capture=no -vvv
+
+      - name: Code Coverage Report
+        uses: orgoro/coverage@v3.2
+        with:
+          coverageFile: coverage.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          thresholdAll: 0.8
+          thresholdModified: 0.8
