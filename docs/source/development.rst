@@ -90,12 +90,19 @@ most current python 3.x release. To make testing easier, use tox.
     $ py.test --cov uriregistry --cov-report term-missing tests
 
 
-Adding pyramid_urireferencer to an application
-==============================================
+Adding an application to the network
+====================================
 
-When you want to add an application to the network of applications, you need to
-include the :mod:`pyramid_urireferencer` library. Add it to your
-:file:`requirements.txt` and :file:`setup.py` requirements.
+To add an application to the network of applications, it has to implement the
+contract described in :doc:`service` and be configured in the registry with the
+url of its references service. Applications built with another framework than
+Pyramid implement the same contract themselves.
+
+Adding pyramid_urireferencer to an application
+----------------------------------------------
+
+For Pyramid applications, include the :mod:`pyramid_urireferencer` library. Add
+it to your :file:`requirements.txt` and :file:`setup.py` requirements.
 
 Add the library to your application by including the following in your main:
 
@@ -128,18 +135,19 @@ The :meth:`get_uri` still needs to be implemented. The referencer also requires 
 
     from pyramid_urireferencer.referencer import Referencer
     from pyramid_urireferencer.models import ApplicationResponse
+    from pyramid_urireferencer.models import Item
 
     class DemoReferencer(Referencer):
 
         def get_uri(self, request):
             id = request.matchdict['id']
-            if request.data_manager.get(aid).type == 'cirkel':
+            if request.data_manager.get(id).type == 'cirkel':
                 return request.registry.settings['cirkel.uri'].format(id)
             else:
                 return request.registry.settings['square.uri'].format(id)
 
 
-        def references(self, uri):
+        def references(self, uri, request):
             try:
                 # Generate a demo response
                 has_references = True
