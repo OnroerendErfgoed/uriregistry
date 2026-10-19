@@ -11,7 +11,7 @@ Schema
 
     package "Client" as AB{
         interface " " as START
-        [pyramid_urireferencer] as RP
+        [urireferencer] as RP
         START -> RP
     }
 
@@ -20,11 +20,11 @@ Schema
     }
 
     package "Application 1" as A1{
-        [pyramid_urireferencer] as RP1
+        [urireferencer] as RP1
     }
 
     package "Application 2" as A2{
-        [pyramid_urireferencer] as RP2
+        [urireferencer] as RP2
     }
 
     RP -> REG
@@ -39,24 +39,28 @@ Schema
 A client queries the registry with a certain URI, eg.
 `http://id.erfgoed.net/foo/bar`. The registry checks if it knows any
 applications that might be using this URI. It discovers that two applications
-could possibly be using it. Both applications are queried. In each application a
-:class:`pyramid_urireferencer.referencer.AbstractReferencer` has been configured
-that can check if an incomming URI is in use in the application. The results are
-sent back to the registry. The registry tallies the results and aggregates them.
-A final response is sent back to the client.
+could possibly be using it. Both applications are queried through their
+references service, which checks if the incoming URI is in use in that
+application. The results are sent back to the registry. The registry tallies the
+results and aggregates them. A final response is sent back to the client.
 
 
-pyramid_urireferencer
----------------------
+The application side
+--------------------
 
-This pluging will expose a service at `/references`. This service endpoint will take a
-single parameter, `uri`. A full request looks like eg.
-`/references?uri=http://id.erfgoed.net/besluiten/1`. Within the application, a
-check will be executed to see if the application keeps references to this
-particular URI.
+Each application has two responsibilities, both described in :doc:`service`:
 
-The plugin also provides a method
-:meth:`pyramid_urireferencer.referencer.Referencer.is_referenced` that can be
-used to contact the central registry to see if a certain URI is in use
-somewhere. This method requires a function :meth:`pyramid_urireferencer.referencer.Referencer.get_uri`
-to determine the uri of the current request.
+* Expose a references service at `/references`. This service endpoint takes a
+  single parameter, `uri`. A full request looks like eg.
+  `/references?uri=http://id.erfgoed.net/besluiten/1`. Within the application, a
+  check is executed to see if the application keeps references to this
+  particular URI.
+* Before an operation that would break references, such as deleting a resource,
+  ask the central registry whether the resource's URI is still in use, and
+  refuse the operation if it is.
+
+How an application implements this is up to the application, as long as it
+follows the contract. For Pyramid applications, :mod:`pyramid_urireferencer`
+provides both: it exposes the `/references` service and offers
+:meth:`pyramid_urireferencer.referencer.Referencer.is_referenced` to contact the
+central registry. See :doc:`development`.

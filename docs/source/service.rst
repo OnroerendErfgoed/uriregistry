@@ -63,19 +63,19 @@ The central UriRegistry has a single endpoint that can be called.
                     "service_url": "http://www.erfgoed.net/references",
                     "items": [
                         {
-                           "name": "itemname1",
+                           "title": "itemname1",
                            "uri": "http://www.erfgoed.net/baz/1"
                         }, {
-                           "name": "itemname_2",
+                           "title": "itemname_2",
                            "uri": "http://www.erfgoed.net/baz/10"
                         }, {
-                           "name": "itemname_3",
+                           "title": "itemname_3",
                            "uri": "http://www.erfgoed.net/baz/14"
                         }, {
-                           "name": "itemname_4",
+                           "title": "itemname_4",
                            "uri": "http://www.erfgoed.net/baz/34"
                         }
-                    ],
+                    ]
                 }, {
                    "count": null,
                    "title": "app2",
@@ -85,7 +85,7 @@ The central UriRegistry has a single endpoint that can be called.
                    "uri": "http://something.erfgoed.net",
                    "items": null
                 }
-            ],
+            ]
         }
 
     :query uri: The uri of the resource the client wants information on. Required.
@@ -93,16 +93,41 @@ The central UriRegistry has a single endpoint that can be called.
     :statuscode 400: There's something wrong with the request, eg. no URI parameter present.
 
 
----------------------
-Pyramid_urireferencer
----------------------
+-------------------------------
+Application references service
+-------------------------------
 
-Every application that implements :mod:`pyramid_urireferencer` has the samen
-endpoint as the central registry, but with a slightly different response set.
+Every application in the network exposes the same endpoint as the central
+registry, but answers only for itself. This is a contract, not a library: any
+application that implements it can be registered with the UriRegistry, whatever
+framework it is built with. :mod:`pyramid_urireferencer` implements it for
+Pyramid applications.
+
+The endpoint has to be served at the ``service_url`` configured for the
+application in the registry, typically ``<application>/references``. The
+registry does not send an ``Accept`` header, so the application must answer
+with JSON regardless.
 
 .. http:get:: /references
 
-    Query the application to see if and possibly where a certain URI is in use. 
+    Query the application to see if and possibly where a certain URI is in use.
+
+    **Structure of a response**:
+
+    * **title** - A title for the application
+    * **uri** - Uri of the application. Does not need to be a http uri.
+    * **service_url** - Url of this references service
+    * **success** - `True` if the application could check its references, else `False`.
+    * **has_references** - `True` if at least one reference was found. `None` (not `False`) if the check failed.
+    * **count** - The number of references found. `None` if the check failed.
+    * **items** - A list of resources that reference the URI in question, at most 5. `None` if the check failed.
+
+        * **title** - Title of the resource
+        * **uri** - Uri of the resource
+
+    Every field is always present; when the check fails, the application still
+    answers ``200`` with ``success`` set to `False` and ``has_references``,
+    ``count`` and ``items`` set to `None`.
 
     **Example request**:
 
@@ -128,16 +153,16 @@ endpoint as the central registry, but with a slightly different response set.
             "service_url": "http://www.erfgoed.net/references",
             "items": [
                 {
-                   "name": "itemname1",
+                   "title": "itemname1",
                    "uri": "http://www.erfgoed.net/baz/1"
                 }, {
-                   "name": "itemname2",
+                   "title": "itemname2",
                    "uri": "http://www.erfgoed.net/baz/10"
                 }, {
-                   "name": "itemname3",
+                   "title": "itemname3",
                    "uri": "http://www.erfgoed.net/baz/14"
                 }, {
-                   "name": "itemname4",
+                   "title": "itemname4",
                    "uri": "http://www.erfgoed.net/baz/34"
                 }
             ]
@@ -146,3 +171,79 @@ endpoint as the central registry, but with a slightly different response set.
     :query uri: The uri of the resource the client wants information on. Required.
     :statuscode 200: The service has a valid answer
     :statuscode 400: There's something wrong with the request, eg. no URI parameter present.
+
+    **Example response when the check failed**:
+
+    .. sourcecode:: http
+
+        HTTP/1.1 200 OK
+        Content-Type: application/json
+
+        {
+            "count": null,
+            "title": "app1",
+            "success": false,
+            "has_references": null,
+            "uri": "http://www.erfgoed.net",
+            "service_url": "http://www.erfgoed.net/references",
+            "items": null
+        }
+
+
+--------------------
+Protected operations
+--------------------
+
+Before an application performs an operation that would break references, such
+as deleting a resource, it asks the central registry whether the resource's URI
+is still in use. If it is, or if the registry could not confirm that it is not,
+the operation is refused with the following response:
+
+* **409 Conflict** - At least one application still references the URI.
+* **500 Internal Server Error** - The registry, or one of the applications it
+  queried, could not be checked. The operation is refused rather than risking
+  broken references.
+
+**Structure of a response**:
+
+* **message** - A human readable summary.
+* **errors** - One message per application that still references the URI (409)
+  or could not be checked (500).
+* **registry_response** - The full response of the central registry, see
+  :http:get:`/references`.
+
+**Example response**:
+
+.. sourcecode:: http
+
+    HTTP/1.1 409 Conflict
+    Content-Type: application/json
+
+    {
+        "message": "The uri http://id.erfgoed.net/foobar/2 is still in use by other applications. A total of 1 references have been found.",
+        "errors": [
+            "http://www.erfgoed.net: 1 references found, such as http://www.erfgoed.net/baz/1"
+        ],
+        "registry_response": {
+            "query_uri": "http://id.erfgoed.net/foobar/2",
+            "success": true,
+            "has_references": true,
+            "count": 1,
+            "applications": [
+                {
+                    "title": "app1",
+                    "uri": "http://www.erfgoed.net",
+                    "service_url": "http://www.erfgoed.net/references",
+                    "success": true,
+                    "has_references": true,
+                    "count": 1,
+                    "items": [
+                        {
+                            "title": "itemname1",
+                            "uri": "http://www.erfgoed.net/baz/1"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
