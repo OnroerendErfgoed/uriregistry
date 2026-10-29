@@ -14,37 +14,19 @@ on:
 
   push:
     branches:
-      - main
-env:
-  PYTHON_VERSION: '3.11'
+      - master
+
+permissions: {}
 
 jobs:
   test:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@v3
-
-      - uses: actions/setup-python@v4
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-      - name: Install python requirements
-        env:
-          HATCH_BUILD_NO_HOOKS: true
-        working-directory: ./
-        run: |
-          pip --version
-          pip install pip-tools
-          pip-sync requirements-dev.txt
-          pip install -e .
-
-      - name: Python tests
-        run: pytest tests --cov=uriregistry --cov-report=xml --capture=no -vvv
-
-      - name: Code Coverage Report
-        uses: orgoro/coverage@v3.2
-        with:
-          coverageFile: coverage.xml
-          token: ${{ secrets.GITHUB_TOKEN }}
-          thresholdAll: 0.8
-          thresholdModified: 0.8
+    uses: OnroerendErfgoed/shared-workflows/.github/workflows/python-tests.yml@v1
+    permissions:
+      contents: read
+      pull-requests: write # coverage comment
+    with:
+      runs-on: ubuntu-latest # public repo: no self-hosted runners
+      requirements-file: requirements-dev.txt
+      lint-command: "" # the old workflow ran no linter
+      test-command: pytest tests --cov=uriregistry --cov-report=xml:"$COVERAGE_XML" --capture=no -vvv
+      coverage-threshold-new: 0 # the old workflow didn't set it
